@@ -1,48 +1,14 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <meta charset="utf-8" />
-      <title>Le blog de l'AVBN</title>
-      <link href="style.css" rel="stylesheet" />
-   </head>
+<!--
+    # La base d'une structure MVC est constitué de 3 fichiers (Modèle - Vue - Contrôleur)
+    # Ce fichier index.php représente le contrôleur et sert à faire (l'intermédiaire) le lien entre les 2 autres fichiers de la structure
+    # Dans cet exemple, il sert à faire le lien entre le modèle et l'affichage
+    # Contrôleur : cette partie gère les échanges avec l'utilisateur. C'est en quelque sorte l'intermédiaire entre l'utilisateur, le modèle et la vue. Le contrôleur va recevoir des requêtes de l'utilisateur. Pour chacune, il va demander au modèle d'effectuer certaines actions (lire des articles de blog depuis une base de données, supprimer un commentaire) et de lui renvoyer les résultats (la liste des articles, si la suppression est réussie). Puis il va adapter ce résultat et le donner à la vue. Enfin, il va renvoyer la nouvelle page HTML, générée par la vue, à l'utilisateur.
+ -->
+<?php
+    require_once('src/model.php');
 
-   <body>
-      <h1>Le super blog de l'AVBN !</h1>
-      <p>Derniers billets du blog :</p>
+    $posts = getPosts();
 
-      <?php
-      // Connexion à la base de données
-      try
-      {
-          $bdd = new PDO('mysql:host=localhost;dbname=architecture-mvc-php;charset=utf8', 'tamsin', 'password');
-      }
-      catch(Exception $e){
-            die( 'Erreur : '.$e->getMessage()   );
-      }
+    require_once('templates/homepage.php');
 
-      // On récupère les 5 derniers billets
-      $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
 
-      while ($donnees = $req->fetch())
-      {
-      ?>
-      <div class="news">
-         <h3>
-            <?php echo htmlspecialchars($donnees['titre']); ?>
-            <em>le <?php echo $donnees['date_creation_fr']; ?></em>
-         </h3>
-         <p>
-         <?php
-         // On affiche le contenu du billet
-                echo    nl2br ( htmlspecialchars( $donnees['contenu']));
-         ?>
-         <br />
-         <em><a href="#">Commentaires</a></em>
-         </p>
-      </div>
-      <?php
-      } // Fin de la boucle des billets
-      $req->closeCursor();
-      ?>
-   </body>
-</html>
