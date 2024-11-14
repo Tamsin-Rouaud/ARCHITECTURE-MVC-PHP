@@ -1,6 +1,9 @@
-<?php $title = "Le blog de l'AVBN"; ?>
+<?php 
+//templates/post.php
 
-<?php ob_start(); ?>
+$title = "Le blog de l'AVBN";
+
+ob_start(); ?>
 
 <h1>Le super blog de l'AVBN !</h1>
 <p><a href="index.php">Retour à la liste des billets</a></p>
@@ -16,6 +19,21 @@
 </div>
 
 <h2>Commentaires</h2>
+
+<form action="index.php?action=addComment&id=<?= $post['identifier'] ?>" method="post">
+    <div>
+        <label for="author">Auteur</label><br>
+        <input type="text" id="author" name="author">
+    </div>
+    <div>
+        <label for="comment">Commentaire</label><br>
+        <textarea name="comment" id="comment"></textarea>
+    </div>
+    <div>
+        <input type="submit">
+    </div>
+</form>
+
 <?php 
     foreach ($comments as $comment) {
 ?>
