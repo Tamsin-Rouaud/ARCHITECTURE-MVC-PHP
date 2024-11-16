@@ -1,48 +1,51 @@
-<!--
-    # La base d'une structure MVC est constitué de 3 fichiers (Modèle - Vue - Contrôleur)
-    # Ce fichier index.php représente le ROUTEUR, il a pour rôle de recevoir toutes les requêtes de l'application et de 
-    router chacune vers le bon contrôleur. 
-    # On préfère créer un seul fichier par contrôleur qui seront tous rassemblés dans le même dossier. Chaque fichier définit une fonction qui sera appelée par le routeur.
-    -->
 <?php
 
-    require_once('src/controllers/homepage.php');
-    require_once('src/controllers/post.php');
-    require_once('src/controllers/add_comment.php');
+// Inclusion des fichiers nécessaires (les contrôleurs pour la page d'accueil, les billets et l'ajout de commentaires)
+require_once('src/controllers/homepage.php');
+require_once('src/controllers/post.php');
+require_once('src/controllers/add_comment.php');
 
+// Utilisation des espaces de noms pour les contrôleurs
+use Application\Controllers\AddComment\AddComment;
+use Application\Controllers\Homepage\Homepage;
+use Application\Controllers\Post\Post;
+
+// Structure try-catch pour gérer les erreurs
 try {
-    if(isset($_GET['action']) && $_GET['action'] !== '') {
-        if($_GET['action'] === 'post') {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $identifier = $_GET['id'];
-                post($identifier);
+    // Vérifie si l'action est spécifiée dans l'URL
+    if (isset($_GET['action']) && $_GET['action'] !== '') {
+        // Si l'action est 'post', affiche le billet demandé
+        if ($_GET['action'] === 'post') {
+            // Vérifie si l'ID du billet est bien défini et positif
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = $_GET['id'];  // Récupère l'ID du billet
+                (new Post())->execute($identifier);  // Exécute le contrôleur 'Post' pour afficher le billet
             } else {
-                throw new Exception("aucun identifiant de billet envoyé");
-                 
-                die;
+                throw new Exception("aucun identifiant de billet envoyé");  // Lève une exception si l'ID est manquant ou invalide
             }
-        } elseif ($_GET['action'] === 'addComment') {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $identifier = $_GET['id'];
-
-                addComment($identifier, $_POST);
+        } 
+        // Si l'action est 'addComment', ajoute un commentaire
+        elseif ($_GET['action'] === 'addComment') {
+            // Vérifie si l'ID du billet est bien défini et positif
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $identifier = $_GET['id'];  // Récupère l'ID du billet
+                (new AddComment())->execute($identifier, $_POST);  // Exécute le contrôleur 'AddComment' pour ajouter un commentaire
             } else {
-                throw new Exception("aucun identifiant de billet envoyé");
-
-                die;
+                throw new Exception("aucun identifiant de billet envoyé");  // Lève une exception si l'ID est manquant ou invalide
             }
         } else {
-            throw new Exception("La page que vous recherchez n'existe pas.");
+            throw new Exception("La page que vous recherchez n'existe pas.");  // Lève une exception si l'action est inconnue
         }
     } else {
-        homepage();
+        // Si aucune action n'est spécifiée, affiche la page d'accueil avec la liste des derniers billets
+        (new Homepage())->execute();
     }
 } catch(Exception $e) {
+    // Si une exception est levée, affiche un message d'erreur
     $errorMessage = $e->getMessage();
 
+    // Inclut le fichier de template pour afficher l'erreur
     require('templates/error.php');
-
 }
-   
 
 

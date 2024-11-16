@@ -1,18 +1,43 @@
-<!--
-    # La base d'une structure MVC est constitué de 3 fichiers (Modèle - Vue - Contrôleur).
-    # Ce fichier homepage.php représente le CONTROLEUR et sert à faire (l'intermédiaire) le lien entre la vue et le modèle.
-    # On préfère créer un seul fichier par contrôleur qui seront tous rassemblés dans le même dossier. Chaque fichier définit une fonction qui sera appelée par le routeur.
-    # Contrôleur : cette partie gère les échanges avec l'utilisateur. C'est en quelque sorte l'intermédiaire entre l'utilisateur, le modèle et la vue. Le contrôleur va recevoir des requêtes de l'utilisateur. Pour chacune, il va demander au modèle d'effectuer certaines actions (lire des articles de blog depuis une base de données, supprimer un commentaire) et de lui renvoyer les résultats (la liste des articles, si la suppression est réussie). Puis il va adapter ce résultat et le donner à la vue. Enfin, il va renvoyer la nouvelle page HTML, générée par la vue, à l'utilisateur.
- -->
 <?php
-//controllers/post.php
-require_once('src/model/post.php');
-require_once('src/model/comment.php');
+// controllers/post.php
 
-function post(string $identifier) {
-    $postRepository = new PostRepository();
-    $post = $postRepository->getPost($identifier);
-    $comments = getComments($identifier);
+// Namespace utilisé pour organiser les classes et éviter les conflits de noms
+namespace Application\Controllers\Post;
 
-    require('templates/post.php');
+// Inclusion des fichiers nécessaires pour gérer les articles, les commentaires et la base de données
+require_once('src/lib/database.php');  // Classe pour la connexion à la base de données
+require_once('src/model/post.php');   // Modèle pour les articles
+require_once('src/model/comment.php'); // Modèle pour les commentaires
+
+// Utilisation des classes avec leurs namespaces
+use Application\Lib\Database\DatabaseConnection;
+use Application\Model\Post\PostRepository;
+use Application\Model\Comment\CommentRepository;
+
+// Définition de la classe Post
+class Post {
+    // Méthode principale qui gère l'affichage d'un article et de ses commentaires
+    public function execute(string $identifier) {
+        // Création d'une connexion à la base de données
+        $connection = new DatabaseConnection();
+
+        // --- Gestion de l'article ---
+        // Instanciation du dépôt d'articles
+        $postRepository = new PostRepository();
+        // Association de la connexion à la base de données au dépôt
+        $postRepository->connection = $connection;
+        // Récupération de l'article correspondant à l'identifiant donné
+        $post = $postRepository->getPost($identifier);
+
+        // --- Gestion des commentaires ---
+        // Instanciation du dépôt des commentaires
+        $commentRepository = new CommentRepository();
+        // Association de la connexion à la base de données au dépôt
+        $commentRepository->connection = $connection;
+        // Récupération des commentaires associés à l'article
+        $comments = $commentRepository->getComments($identifier);
+
+        // Inclusion de la vue pour afficher l'article et ses commentaires
+        require('templates/post.php');
+    }
 }
