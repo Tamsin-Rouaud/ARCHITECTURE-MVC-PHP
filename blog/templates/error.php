@@ -1,4 +1,9 @@
 <?php 
+// src/templates/error.php
+
+# =>    Rôle : Fichier de vue pour afficher un message d'erreur en cas d'exception
+# =>    Fonctionnalité : Affiche un message d'erreur générique si une exception est levée dans le contrôleur principal
+# =>    Utilité : Gère les erreurs d'exécution et affiche un message à l'utilisateur
 
 // Déclaration d'un titre pour la page
 $title = "Le blog de l'AVBN"; 

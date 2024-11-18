@@ -1,11 +1,15 @@
 <?php
-// src/model/post.php
+// src/model/Post.php
+
+# =>    Rôle : Modélise un billet de blog 
+# =>    Fonctionnalité : Définit la structure d'un billet (titre, contenu, date de création) / COntient un PostRepository qui permet d'interagir avec la base de données pour récupérer les billets de blog
+# =>    Utilité : Gère les données et la logique métier concernant les billets de blogs (récupérer, afficher)
 
 // Déclaration du namespace pour organiser les classes liées aux articles (posts)
 namespace Application\Model\Post;
 
 // Inclusion de la classe de connexion à la base de données
-require_once('src/lib/database.php');
+require_once('src/lib/Database.php');
 
 // Utilisation de la classe `DatabaseConnection` du namespace correspondant
 use Application\Lib\Database\DatabaseConnection;

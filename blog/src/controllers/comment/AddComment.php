@@ -1,12 +1,16 @@
 <?php
-// src/controllers/add_comment.php
+// src/controllers/comment/AddComment.php
+
+# =>    Rôle : Gère l'ajout d'un commentaire sur un billet de blog 
+# =>    Fonctionnalité : Récupère les données du formulaire de commentaire (auteur et texte) et les insère dans la base de données
+# =>    Utilité : Permet aux utilisateurs de commenter les billets de blog.
 
 // Déclare un namespace pour organiser les classes et éviter les conflits de noms
-namespace Application\Controllers\AddComment;
+namespace Application\Controllers\Comment\AddComment;
 
 // Inclut les fichiers nécessaires
 require_once('src/model/comment.php'); // Pour gérer les commentaires
-require_once('src/lib/database.php');  // Pour établir une connexion à la base de données
+require_once('src/lib/Database.php');  // Pour établir une connexion à la base de données
 
 // Utilise les namespaces pour les classes importées
 use Application\Lib\Database\DatabaseConnection;

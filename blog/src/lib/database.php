@@ -1,4 +1,10 @@
 <?php
+declare(strict_types=1);
+// src/lib/Database.php
+
+# =>    Rôle : Gère la connexion à la base de données
+# =>    Fonctionnalité : Crée une connexion à la base de donnée MySQL via PDO
+# =>    Utilité : Permet de se connecter à la base de données pour effectuer des opérations (lecture, écriture, etc)
 
 // Namespace utilisé pour organiser la classe dans la bibliothèque dédiée à la base de données
 namespace Application\Lib\Database;

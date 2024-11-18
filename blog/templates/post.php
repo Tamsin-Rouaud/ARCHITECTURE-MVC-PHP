@@ -1,4 +1,9 @@
 <?php 
+// src/templates/post.php
+
+# =>    Rôle : Fichier de vue pour afficher un billet spécifique et ses commentaires 
+# =>    Fonctionnalité : Affiche le détail d'un billet et permet l'ajout de nouveaux commentaires
+# =>    Utilité : Présente les données sous forme html pour un billet spécifique
 
 // Définition du titre de la page. Ce titre peut être modifié dans les contrôleurs et sera affiché dans le layout.
 $title = "Le blog de l'AVBN";
@@ -55,7 +60,7 @@ ob_start();
     <!-- Affichage de chaque commentaire -->
     <p>
         <strong><?= htmlspecialchars($comment->author) ?></strong>
-        le <?= $comment->frenchCreationDate ?>
+        le <?= $comment->frenchCreationDate ?> (<a href="index.php?action=updateComment&id=<?= $comment->identifier ?>">modifier</a>)
     </p>
 
     <p>

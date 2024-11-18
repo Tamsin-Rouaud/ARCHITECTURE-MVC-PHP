@@ -1,11 +1,15 @@
 <?php
-// controllers/homepage.php
+// src/controllers/Homepage.php
+
+# =>    Rôle : Gère la logique de la page d'accueil du blog 
+# =>    Fonctionnalité : Récupère les derniers billets de blog et les passe à la vue pour les afficher 
+# =>    Utilité : Afficher la page d'accueil avec les derniers articles.
 
 // Namespace utilisé pour organiser les classes et éviter les conflits de noms
 namespace Application\Controllers\Homepage;
 
 // Inclusion des fichiers nécessaires pour la gestion des articles et la connexion à la base de données
-require_once('src/lib/database.php'); // Gestion de la connexion à la base de données
+require_once('src/lib/Database.php'); // Gestion de la connexion à la base de données
 require_once('src/model/post.php');  // Modèle pour interagir avec les articles
 
 // Utilisation des classes avec leurs namespaces pour simplifier leur appel

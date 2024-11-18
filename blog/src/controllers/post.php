@@ -1,11 +1,15 @@
 <?php
-// controllers/post.php
+// src/controllers/Post.php
+
+# =>    Rôle : Gère la logique d'affichage d'un billet de blog spécifique 
+# =>    Fonctionnalité : Récupère un billet de blog spécifique (par son id) et ses commentaires associés pour les transmettre à la vue pour l'affichage 
+# =>    Utilité : Sert à afficher un billet de blog avec ses détails et ses commentaires.
 
 // Namespace utilisé pour organiser les classes et éviter les conflits de noms
 namespace Application\Controllers\Post;
 
 // Inclusion des fichiers nécessaires pour gérer les articles, les commentaires et la base de données
-require_once('src/lib/database.php');  // Classe pour la connexion à la base de données
+require_once('src/lib/Database.php');  // Classe pour la connexion à la base de données
 require_once('src/model/post.php');   // Modèle pour les articles
 require_once('src/model/comment.php'); // Modèle pour les commentaires
 

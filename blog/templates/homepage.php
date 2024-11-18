@@ -1,4 +1,9 @@
 <?php 
+// src/templates/homepage.php_check_syntax
+
+# =>    Rôle : Fichier de vue pour afficher la page d'accueil avec les derniers billets 
+# =>    Fonctionnalité : Affiche la liste des billets récupérer par le contrôleur Homepage
+# =>    Utilité : Présente les données sous forme html
 
 // Déclaration du titre de la page
 $title = "Le blog de l'AVBN";
